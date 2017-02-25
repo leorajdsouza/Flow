@@ -1,11 +1,11 @@
 {
   "ProjectName": "Flow",
-  "ProjectGuid": "242366c5-94b9-4a5d-a1c7-651f8b9d6247",
+  "ProjectGuid": "de71bee1-dbb5-4d92-9178-26c7da2d9dbf",
   "projectVersion": 1,
-  "AppIdentifier": "com.telerik.Flow",
-  "DisplayName": "Flow",
+  "AppIdentifier": "com.telerik.PumpRemote",
+  "DisplayName": "Pump Remote",
   "Author": "",
-  "Description": "Flow",
+  "Description": "Pump Remote",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
   "iOSDeviceFamily": [
@@ -19,8 +19,7 @@
     "android.permission.INTERNET"
   ],
   "DeviceOrientations": [
-    "Portrait",
-    "Landscape"
+    "Portrait"
   ],
   "AndroidHardwareAcceleration": "true",
   "iOSStatusBarStyle": "Default",
@@ -32,14 +31,17 @@
     "ID_CAP_WEBBROWSERCOMPONENT"
   ],
   "WP8Requirements": [],
-  "WP8PublisherID": "{8f9abe80-9502-4a5e-b456-436b0c862b84}",
-  "WP8ProductID": "{c975c04b-b7ed-4f77-9591-401d670b5cc1}",
+  "WP8PublisherID": "{2c7949aa-0ec8-43ca-b9dc-2ed3205e7a8d}",
+  "WP8ProductID": "{b4a05657-43a3-401b-b1ff-0373ff11f5e4}",
   "WPSdk": "8.0",
-  "WP8PackageIdentityName": "1234Telerik.Flow",
+  "WP8PackageIdentityName": "1234Telerik.PumpRemote",
   "WP8WindowsPublisherName": "CN=Telerik",
   "WP8SupportedResolutions": [
     "ID_RESOLUTION_WVGA",
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
+  ],
+  "CorePlugins": [
+    "cordova-plugin-whitelist"
   ]
 }

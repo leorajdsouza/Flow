@@ -1,0 +1,78 @@
+ @import url('https://fonts.googleapis.com/css?family=Oswald');
+ .tabs-flow .tabs {
+     border: none;
+     background-color: #EF7B47 !important;
+     background-image: none;
+     color: #fff;
+ }
+ 
+ .pane {
+     background-color: #1F2729;
+     color: #fff;
+ }
+ 
+ .countdown {
+     font-size: 60px;
+     text-align: center;
+     display: block;
+     margin-top: 50%;
+     font-family: 'Oswald', sans-serif;
+ }
+ 
+ .btn-countdown {
+     display: block;
+     margin: 0 auto;
+     top: 100px;
+     width: 200px;
+     background-color: #EF7B47 !important;
+ }
+ 
+ .status {
+     color: #fff;
+     text-align: center;
+     display: block;
+     width: 100%;
+     text-transform: capitalize;
+     font-size: 25px;
+     animation: blink-animation 1s steps(5, start) infinite;
+     -webkit-animation: blink-animation 1s steps(5, start) infinite;
+ }
+ 
+ .chart {
+     margin-top: 20%;
+      text-transform: capitalize;
+      margin-bottom: 10%; 
+ }
+ 
+ .chart-info{ 
+     margin-top: 20px;
+     font-size: 25px; 
+      font-family: 'Oswald', sans-serif;
+      
+
+ }
+  
+.settings{
+  font-family: 'Oswald', sans-serif;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.flowPrime{
+    color: #EF7B47;
+}
+ .blink {
+     animation: blink-animation 2s steps(5, start) infinite;
+     -webkit-animation: blink-animation 2s steps(5, start) infinite;
+ }
+ 
+ @keyframes blink-animation {
+     to {
+         visibility: hidden;
+     }
+ }
+ 
+ @-webkit-keyframes blink-animation {
+     to {
+         visibility: hidden;
+     }
+ }
