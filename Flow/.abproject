@@ -1,0 +1,45 @@
+{
+  "ProjectName": "Flow",
+  "ProjectGuid": "242366c5-94b9-4a5d-a1c7-651f8b9d6247",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.Flow",
+  "DisplayName": "Flow",
+  "Author": "",
+  "Description": "Flow",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "4.0.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "true",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{8f9abe80-9502-4a5e-b456-436b0c862b84}",
+  "WP8ProductID": "{c975c04b-b7ed-4f77-9591-401d670b5cc1}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.Flow",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
