@@ -6,6 +6,12 @@
      color: #fff;
  }
  
+ .chart-split {
+     background: #fff;
+     color: #000;
+     height: 100%;
+ }
+ 
  .pane {
      background-color: #1F2729;
      color: #fff;
@@ -45,9 +51,13 @@
  }
  
  .chart-info {
-     margin-top: 20px;
      font-size: 25px;
      font-family: 'Oswald', sans-serif;
+ }
+ 
+ .flow-grey {
+     color: #ADADAD;
+     text-transform: uppercase;
  }
  
  .settings {

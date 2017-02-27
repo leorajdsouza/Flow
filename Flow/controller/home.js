@@ -1,14 +1,5 @@
 app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform) {
 
-
-    document.addEventListener('onSMSArrive', function (e) {
-        var sms = e.data;
-        //alert(sms.address);
-
-    });
-
-    
-
     $scope.countDown = "00:00:00";
     $scope.status = "";
     $scope.timerCtrl = undefined;
@@ -23,18 +14,11 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.btnStatus = "START";
         } else {
             //send sms and wait for confirmation then trigger timer
-            $ionicLoading.show({
-                template: 'Please wait, while sending signal to PUMP'
-            });
-            if (SMS) SMS.sendSMS("9591231640", "START", function () {
-                $ionicLoading.hide();
-
-            }, function () {
-
-                $ionicLoading.hide();
-            });
-
-
+            // $ionicLoading.show({
+            //     template: 'Please wait, while sending signal to PUMP'
+            // });
+            //$ionicLoading.hide();
+    
 
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
@@ -90,6 +74,40 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     function resetTime() {
         localStorage.removeItem('flowTime');
     }
+
+
+    // document.addEventListener('onSMSArrive', function (e) {
+    //     alert();
+    //     $scope.log = "msg from 2nd" + JSON.stringify(e);
+
+    //     SMS.stopWatch(onSuccess, onError);
+    // });
+
+    
+
+    // function onSuccess(s) {
+    //     console.log(s);
+    // }
+    // function onError(e) {
+    //     console.log(e);
+    // }
+
+
+//    SMS.startWatch(function () {
+//                 alert("started");
+//             }, function () {
+//                 alert("error");
+//             });
+
+//             if (SMS) {
+//                 SMS.sendSMS("9591231640", "START", function () {
+//                     $scope.log = "sent";
+//                 }, function () {
+//                     alert("error");
+//                 });
+//             }
+
+
 
 
 });
