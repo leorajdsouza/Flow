@@ -23,7 +23,11 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             //     template: 'Please wait, while sending signal to PUMP'
             // });
             //$ionicLoading.hide();
- 
+
+            sendSignal(function () {
+                alert("sent");
+            });
+
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
             var flowStartTime = timeCapsule();
@@ -63,7 +67,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         isRunning();
     });
 
-    isRunning();
+    // isRunning();
 
     function timeCapsule() {
         if (localStorage.getItem("flowTime") == null) {
@@ -79,73 +83,38 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         localStorage.removeItem('flowTime');
     }
 
+    function isFlowRunning() {
 
+    }
 
-    // // .fromTemplate() method
-    // var template = '<ion-popover-view><ion-header-bar> <h1 class="title">My Popover Title</h1> </ion-header-bar> <ion-content> Hello! </ion-content></ion-popover-view>';
+    function sendSignal(callback) {
+        if (SMS) {
+            SMS.stopWatch(onSuccess, onError);
+            SMS.startWatch(onSuccess, onError)
+            sendSMS("START", callback());
+        }
 
-    // $scope.popover = $ionicPopover.fromTemplate(template, {
-    //     scope: $scope
-    // });
+    }
 
-    // .fromTemplateUrl() method
-    $ionicPopover.fromTemplateUrl('views/settings.html', {
-        scope: $scope
-    }).then(function (popover) {
-        $scope.popover = popover;
+    $ionicPlatform.on('onSMSArrive', function (e) {
+        $scope.log = "msg from 2nd" + JSON.stringify(e);
+        SMS.stopWatch(onSuccess, onError);
     });
 
-
-    $scope.openPopover = function ($event) {
-        $scope.popover.show($event);
-    };
-    $scope.closePopover = function () {
-        $scope.popover.hide();
-    };
-    //Cleanup the popover when we're done with it!
-    $scope.$on('$destroy', function () {
-        $scope.popover.remove();
-    });
-    // Execute action on hidden popover
-    $scope.$on('popover.hidden', function () {
-        // Execute action
-    });
-    // Execute action on remove popover
-    $scope.$on('popover.removed', function () {
-        // Execute action
-    });
-    // document.addEventListener('onSMSArrive', function (e) {
-    //     alert();
-    //     $scope.log = "msg from 2nd" + JSON.stringify(e);
-
-    //     SMS.stopWatch(onSuccess, onError);
-    // });
-
-
-
-    // function onSuccess(s) {
-    //     console.log(s);
-    // }
-    // function onError(e) {
-    //     console.log(e);
-    // }
-
-
-    //    SMS.startWatch(function () {
-    //                 alert("started");
-    //             }, function () {
-    //                 alert("error");
-    //             });
-
-    //             if (SMS) {
-    //                 SMS.sendSMS("9591231640", "START", function () {
-    //                     $scope.log = "sent";
-    //                 }, function () {
-    //                     alert("error");
-    //                 });
-    //             }
-
-
+    function onSuccess(s) {
+        console.log(s);
+    }
+    function onError(e) {
+        console.log(e);
+    }
+    function sendSMS(msg, callback) {
+        SMS.sendSMS("9591231640", msg, function () {
+            $scope.log = "sent";
+            callback();
+        }, function () {
+            alert("Error while sending sms.");
+        });
+    }
 
 
 });
