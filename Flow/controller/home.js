@@ -1,12 +1,21 @@
 app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform) {
 
+
+    document.addEventListener('onSMSArrive', function (e) {
+        var sms = e.data;
+        //alert(sms.address);
+
+    });
+
+    
+
     $scope.countDown = "00:00:00";
     $scope.status = "";
     $scope.timerCtrl = undefined;
     $scope.btnStatus = "START";
 
     $scope.startFlow = function (signal) {
-      
+
         if (angular.isDefined($scope.timerCtrl) && (localStorage.getItem("flowTime") == null || signal == "STOP")) {
             //send stop signal to water pump  in stop flow
             $scope.stopFlow();
@@ -17,7 +26,15 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $ionicLoading.show({
                 template: 'Please wait, while sending signal to PUMP'
             });
-            $ionicLoading.hide();
+            if (SMS) SMS.sendSMS("9591231640", "START", function () {
+                $ionicLoading.hide();
+
+            }, function () {
+
+                $ionicLoading.hide();
+            });
+
+
 
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
@@ -54,7 +71,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         $scope.stopFlow();
     });
 
-    $ionicPlatform.on('resume', function () { 
+    $ionicPlatform.on('resume', function () {
         isRunning();
     });
 

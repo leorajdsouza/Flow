@@ -39,27 +39,27 @@
  }
  
  .chart {
-     margin-top: 20%;
-      text-transform: capitalize;
-      margin-bottom: 10%; 
+     margin-top: 10%;
+     text-transform: uppercase;
+     margin-bottom: 10%;
  }
  
- .chart-info{ 
+ .chart-info {
      margin-top: 20px;
-     font-size: 25px; 
-      font-family: 'Oswald', sans-serif;
-      
-
+     font-size: 25px;
+     font-family: 'Oswald', sans-serif;
  }
-  
-.settings{
-  font-family: 'Oswald', sans-serif;
-    margin-top: 20px;
-    font-size: 20px;
-}
-.flowPrime{
-    color: #EF7B47;
-}
+ 
+ .settings {
+     font-family: 'Oswald', sans-serif;
+     margin-top: 20px;
+     font-size: 20px;
+ }
+ 
+ .flowPrime {
+     color: #EF7B47;
+ }
+ 
  .blink {
      animation: blink-animation 2s steps(5, start) infinite;
      -webkit-animation: blink-animation 2s steps(5, start) infinite;
