@@ -1,8 +1,14 @@
-<ion-view view-title="Settings" scroll="false" class="padding">
-    <ion-content class="padding">
-        <div class="row settings">
-            <div class="col">FLOW NUMBER</div>
-            <div class="col flowPrime">+9591231640  <ion-icon name="create"></ion-icon></div>
+<ion-view view-title="Home">
+    <ion-content class="padding" scroll="false">
+        <div class="list settings-page"> <a class="item" ng-click="changeNumber()">Mobile Number <span class="item-note" >
+    {{data.flowNumber}}
+    </span> </a>
+            <a> <span>
+   <ion-toggle ng-model="settingsUsage.checked" ng-change="settingsChange()"> Send Usage Stats</ion-toggle>
+    </span> </a>
+            <a> <span>
+   <ion-toggle ng-model="settingsSMS.checked" ng-change="settingsChange()">Track SMS Count</ion-toggle>
+    </span> </a>
         </div>
     </ion-content>
 </ion-view>

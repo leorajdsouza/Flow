@@ -6,6 +6,13 @@
      color: #fff;
  }
  
+ .custom-header {     
+     border: none !important;
+     border-width:0px;
+     background-color: transparent !important; 
+ }
+ 
+
  .chart-split {
      background: #fff;
      color: #000;
@@ -60,16 +67,33 @@
      text-transform: uppercase;
  }
  
+ 
  .settings {
-     font-family: 'Oswald', sans-serif;
-     margin-top: 20px;
-     font-size: 20px;
+     font-size: 30px;
+     color: #fff !important;
  }
+ .button .icon:before, .button.icon:before, .button.icon-left:before, .button.icon-right:before { 
+    color: #fff !important;
+}
  
  .flowPrime {
      color: #EF7B47;
  }
+ .pad10{
+         padding: 10px !important;
+ }
  
+ .button.button-positive ,.button.button-positive.activated { 
+    background-color:#EF7B47 ;
+    color: #fff;
+}
+ .settings-page{
+     font-size: 25px;
+      
+     color: #000;
+     margin-top: 10px;
+ }
+
  .blink {
      animation: blink-animation 2s steps(5, start) infinite;
      -webkit-animation: blink-animation 2s steps(5, start) infinite;
