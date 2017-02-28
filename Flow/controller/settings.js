@@ -2,11 +2,12 @@ app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore) {
     $scope.data = {};
 
     $scope.settingsChange = function () {
-        console.log('settingsStats  Change', $scope.pushNotification.checked);
+        console.log('settingsStats  Change');
     };
 
     $scope.settingsUsage = { checked: true };
     $scope.settingsSMS = { checked: true };
+    $scope.settingsDebug = { checked: false };
 
     $scope.changeNumber = function () {
         var myPopup = $ionicPopup.show({

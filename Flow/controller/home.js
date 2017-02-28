@@ -1,7 +1,7 @@
 app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state) {
-
+    var mobileNumber = "";
     if (localStore.get("flowNumber")) {
-        var mobileNumber = localStore.get("flowNumber");
+        mobileNumber = localStore.get("flowNumber");
     } else {
         $state.go("tabs.settings");
     }
@@ -23,10 +23,13 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             //     template: 'Please wait, while sending signal to PUMP'
             // });
             //$ionicLoading.hide();
-
-            sendSignal(function () {
-                alert("sent");
-            });
+ 
+            //check if timer is already running, then sinal was sent to pump
+           
+            if (localStorage.getItem("flowTime") == null) {
+                alert("send");
+               // sendSMS("START");
+            }
 
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
@@ -41,8 +44,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.timerCtrl = $interval(timeNow, 1000);
         }
     }
-
-    //isRunning();
+ 
     function isRunning() {
         //start flow if running
         if (localStorage.getItem("flowTime") != null) {
@@ -67,7 +69,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         isRunning();
     });
 
-    // isRunning();
+    isRunning();
 
     function timeCapsule() {
         if (localStorage.getItem("flowTime") == null) {
@@ -87,33 +89,39 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
 
     }
 
-    function sendSignal(callback) {
+
+    // $scope.$on('packetsArrived', function (event, args) {
+    //     console.log(args);
+    // });
+
+    // $ionicPlatform.on('onSMSArrive', function (sms) {
+    //     console.log("onSMSArrive");
+    //     debugger
+    //     if (sms.address == mobileNumber) {
+    //         // sms.sms.body
+    //         //  if body is stop 
+    //         $rootScope.$broadcast("packetsArrived", { body: body });
+    //     }
+    //     //  $scope.log = "msg from 2nd" + JSON.stringify(e);
+    //     SMS.stopWatch(onSuccess, onError);
+    // });
+ 
+
+    function sendSMS(msg) {
         if (SMS) {
-            SMS.stopWatch(onSuccess, onError);
-            SMS.startWatch(onSuccess, onError)
-            sendSMS("START", callback());
+            SMS.sendSMS(mobileNumber, msg, function () {
+               // SMS.startWatch(onSuccess, onError)
+            }, function () {
+                alert("Error while sending sms.");
+            });
         }
-
     }
-
-    $ionicPlatform.on('onSMSArrive', function (e) {
-        $scope.log = "msg from 2nd" + JSON.stringify(e);
-        SMS.stopWatch(onSuccess, onError);
-    });
 
     function onSuccess(s) {
         console.log(s);
     }
     function onError(e) {
         console.log(e);
-    }
-    function sendSMS(msg, callback) {
-        SMS.sendSMS("9591231640", msg, function () {
-            $scope.log = "sent";
-            callback();
-        }, function () {
-            alert("Error while sending sms.");
-        });
     }
 
 
