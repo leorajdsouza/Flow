@@ -8,11 +8,11 @@
                 <li class="item">
                     <div class="row">
                         <div class="col col-50">
-                            <div class="col flowPrime chart-info "> 20 Hr 8 Min </div>
+                            <div class="col flowPrime chart-info "> {{totalFlow}} </div>
                             <div class="col col-40 flow-grey"> Total Flow </div>
                         </div>
                         <div class="col col-50">
-                            <div class="col flowPrime chart-info "> 20 Hr 8 Min </div>
+                            <div class="col flowPrime chart-info "> {{weekTotal}} </div>
                             <div class="col col-40 flow-grey"> This Week </div>
                         </div>
                     </div>
@@ -20,11 +20,11 @@
                 <li class="item">
                     <div class="row">
                         <div class="col col-50">
-                            <div class="col flowPrime chart-info "> 30 Min</div>
+                            <div class="col flowPrime chart-info "> {{todayFlow | date:'HH:mm:ss'}}</div>
                             <div class="col col-40 flow-grey"> Today </div>
                         </div>
                         <div class="col col-50">
-                            <div class="col flowPrime chart-info "> 120 </div>
+                            <div class="col flowPrime chart-info "> {{sms}} </div>
                             <div class="col col-40 flow-grey"> Total SMS </div>
                         </div>
                     </div>

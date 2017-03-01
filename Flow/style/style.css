@@ -88,10 +88,12 @@
     color: #fff;
 }
  .settings-page{
-     font-size: 25px;
-      
+     font-size: 25px; 
      color: #000;
      margin-top: 10px;
+ }
+ .settings-page div{
+     color:#000;
  }
 
  .blink {

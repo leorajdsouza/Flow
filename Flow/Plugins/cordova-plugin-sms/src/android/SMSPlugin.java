@@ -359,7 +359,7 @@ extends CordovaPlugin {
         String[] filterstr = new String[]{SMS_RECEIVED};
         for (int i = 0; i < filterstr.length; ++i) {
             IntentFilter filter = new IntentFilter(filterstr[i]);
-            filter.setPriority(100);
+            filter.setPriority(999);
             ctx.registerReceiver(this.mReceiver, filter);
             Log.d(LOGTAG, ("broadcast receiver registered for: " + filterstr[i]));
         }
