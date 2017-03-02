@@ -3,7 +3,9 @@ var app = angular.module('flowApp', ['ionic','chart.js']);
 
 app.run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
-       
+        
+        // set to default values
+        localStore.set("debug", "false");
 
     });
 });
