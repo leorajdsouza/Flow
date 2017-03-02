@@ -1,17 +1,23 @@
 
 //to do
 
-// store font offline
+// store font offline *done
 // intercept msg
-// week stats
+// week stats *done
 // debug alert
-// update following week days to zero - use loop
-// reset stats on first launch
-// set sec to min while setting min in local storage
-// what if total hour exceeds 24hr ? reset after 30days
-//chart date and hr format 20 hr 2 min
-// reset date like todayflow - in no data available 1:0:0:0
-//change bg color of message box
+// update following week days to zero - use loop * test pending
+// reset stats on first launch *
+// set sec to min while setting min in local storage -- no required
+// what if total hour exceeds 24hr ? reset after 30days *done , test pending
+//chart date and hr format 20 hr 2 min *done
+// reset date like todayflow - if no data available 1:0:0:0 *done
+//change bg color of message box *done
+// if timer count is in sec convert to 1 min and save *done
+
+//use list sms 
+//stop flowcode
+//set localstorage to default value
+
 
 
 app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService) {
@@ -31,7 +37,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         if (angular.isDefined($scope.timerCtrl) && (localStorage.getItem("flowTime") == null || signal == "STOP")) {
             //send stop signal to water pump  in stop flow
             usage.update(timeCapsule());
-             $scope.stopFlow();
+            $scope.stopFlow();
             $scope.status = "";
             $scope.btnStatus = "START";
         } else {
@@ -44,13 +50,16 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             //check if timer is already running, then sinal was sent to pump
 
             if (localStorage.getItem("flowTime") == null) {
-                              
-                smsService.send("START", mobileNumber);
+                smsService.send(appMsg.start, mobileNumber);
             }
+
+            // smsService.list(function (msgs) {
+            //     console.log(msgs);
+            // });
 
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
-            var flowStartTime = timeCapsule(); 
+            var flowStartTime = timeCapsule();
             function timeNow() {
                 var tempTime = new Date();
                 var difference = tempTime.getTime() - flowStartTime.getTime();
@@ -74,6 +83,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.timerCtrl = undefined;
             $scope.countDown = "00:00:00";
             resetTime();
+            smsService.send(appMsg.stop, mobileNumber);
         }
     };
 
@@ -110,17 +120,17 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     //     console.log(args);
     // });
 
-    $ionicPlatform.on('onSMSArrive', function (sms) {
-        console.log("onSMSArrive");
-       alert("incomming");
-        if (sms.address == mobileNumber) {
-            // sms.sms.body
-            //  if body is stop 
-            $rootScope.$broadcast("packetsArrived", { body: body });
-        }
-        //  $scope.log = "msg from 2nd" + JSON.stringify(e);
-        SMS.stopWatch(onSuccess, onError);
-    });
+    // $ionicPlatform.on('onSMSArrive', function (sms) {
+    //     console.log("onSMSArrive");
+    //     alert("incomming");
+    //     if (sms.address == mobileNumber) {
+    //         // sms.sms.body
+    //         //  if body is stop 
+    //         $rootScope.$broadcast("packetsArrived", { body: body });
+    //     }
+    //     //  $scope.log = "msg from 2nd" + JSON.stringify(e);
+    //     SMS.stopWatch(onSuccess, onError);
+    // });
 
 
     function onSuccess(s) {
@@ -128,6 +138,56 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     }
     function onError(e) {
         console.log(e);
+    }
+
+    var msgs = [
+        {
+
+            "address": "+919591231640",
+            "date": 1488430379890,
+            "date_sent": 1488430380000,
+            "reply_path_present": 0,
+            "body": "Starr"
+        },
+        {
+
+            "address": "JM-JIOOTP",
+            "date": 1488384511760,
+            "date_sent": 1488384509000,
+            "reply_path_present": 0,
+            "body": "59705 is your One Time Password(OTP) for +918660865067. Please enter the OTP to continue registration for Jio4GVoice.",
+
+        }
+    ]
+
+
+    function getStatus(status) {
+        angular.forEach(msgs, function (value, key) {
+            //  this.push(key + ': ' + value);          
+            //var test = "2 PUMP ON DATE:17/07/07";
+
+            //get date from local storage 
+            //get mobile number from local storage 
+
+            if ("+91" + mobileNumber == value.address) {
+                //  console.log(value.body);
+                textLike(value.body, status);
+            }
+
+        }, []);
+
+
+    }
+    function liveStatus() {
+
+    }
+
+    function textLike(body, str) {
+        if (body.search(str) == -1) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 

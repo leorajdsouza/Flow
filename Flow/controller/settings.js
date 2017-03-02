@@ -3,6 +3,8 @@ app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore) {
 
     $scope.settingsChange = function () {
         console.log('settingsStats  Change');
+        localStore.set("debug", $scope.settingsDebug);
+
     };
 
     $scope.settingsUsage = { checked: true };

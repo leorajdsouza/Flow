@@ -3,3 +3,4 @@ var appMsg = {
     stop: "STOP",
     status: "STATUS"
 }
+ 

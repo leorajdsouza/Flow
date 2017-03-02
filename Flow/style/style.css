@@ -1,4 +1,12 @@
- @import url('https://fonts.googleapis.com/css?family=Oswald');
+ /*@import url('https://fonts.googleapis.com/css?family=Oswald');*/
+ 
+ @font-face {
+     font-family: 'Oswald';
+     font-style: normal;
+     font-weight: 400;
+     src: url(font/Oswald-Regular.ttf);
+ }
+ 
  .tabs-flow .tabs {
      border: none;
      background-color: #EF7B47 !important;
@@ -6,13 +14,12 @@
      color: #fff;
  }
  
- .custom-header {     
+ .custom-header {
      border: none !important;
-     border-width:0px;
-     background-color: transparent !important; 
+     border-width: 0px;
+     background-color: transparent !important;
  }
  
-
  .chart-split {
      background: #fff;
      color: #000;
@@ -67,35 +74,51 @@
      text-transform: uppercase;
  }
  
- 
  .settings {
      font-size: 30px;
      color: #fff !important;
  }
- .button .icon:before, .button.icon:before, .button.icon-left:before, .button.icon-right:before { 
-    color: #fff !important;
-}
+ 
+ .button .icon:before, .button.icon:before, .button.icon-left:before, .button.icon-right:before {
+     color: #fff !important;
+ }
  
  .flowPrime {
      color: #EF7B47;
  }
- .pad10{
-         padding: 10px !important;
+ 
+ .pad10 {
+     padding: 10px !important;
  }
  
- .button.button-positive ,.button.button-positive.activated { 
-    background-color:#EF7B47 ;
-    color: #fff;
-}
- .settings-page{
-     font-size: 25px; 
+ .button.button-positive, .button.button-positive.activated {
+     background-color: #EF7B47;
+     color: #fff;
+ }
+ 
+ .settings-page {
+     font-size: 25px;
      color: #000;
      margin-top: 10px;
  }
- .settings-page div{
-     color:#000;
+ 
+ .settings-page div {
+     color: #000;
  }
-
+ 
+ .popup-head {
+     padding: 15px 10px;
+     border-bottom: 1px solid #eee;
+     text-align: center;
+     background-color: #EF7B47 !important;
+     color: #000 !important;
+ }
+ 
+ .popup-head h3:first-child, .h3:first-child {
+     margin-top: 0;
+     color: #fff;
+ }
+ 
  .blink {
      animation: blink-animation 2s steps(5, start) infinite;
      -webkit-animation: blink-animation 2s steps(5, start) infinite;

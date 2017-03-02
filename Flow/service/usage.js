@@ -1,25 +1,32 @@
 
-app.factory("usage", function (localStore) {
+app.factory("usage", function (localStore, $rootScope) {
     return {
         update: function (usage) {
             var currentday = new Date();
             var Usage = new Date(usage);
             var usageInMil = currentday - Usage;
-            var minutes = Math.floor(usageInMil / 60000);
+            //console.log(usageInMil);
+            //consider 20 sec to 1min 
+            if (usageInMil < 21088) {
+                var minutes = Math.floor(usageInMil / 60000);
+            } else {
+                var minutes = 1;
+            }
+ 
             updateTotal(minutes);
             updateWeek(minutes);
-        }
-
+            //update stats page
+            $rootScope.$broadcast('usageUpdated', true);
+        } 
     }
 
     function updateTotal(min) {
-        
         if (localStore.get("total")) {
             var total = parseInt(localStore.get("total"));
             total = total + min;
             localStore.set("total", total);
-        }else{
-             localStore.set("total", 1);
+        } else {
+            localStore.set("total", min);
         }
     }
 
@@ -61,11 +68,14 @@ app.factory("usage", function (localStore) {
                     weekObj["Saturday"] = weekObj["Saturday"] + min;
                     break;
             }
+            //reset upcomming weeks data             
+            for (var i = 0; i < Object.keys(weekObj).length; i++) {
+                if (i >= todayDaynum) {
+                    weekObj[Object.keys(weekObj)[i]] = 0;
+                }
+            }
             localStore.set("weeks", JSON.stringify(weekObj));
-        }
-
-
-
+        } 
     }
 
 });
