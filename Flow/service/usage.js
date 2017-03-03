@@ -6,18 +6,19 @@ app.factory("usage", function (localStore, $rootScope) {
             var Usage = new Date(usage);
             var usageInMil = currentday - Usage;
             //console.log(usageInMil);
+
             //consider 20 sec to 1min 
-            if (usageInMil < 21088) {
-                var minutes = Math.floor(usageInMil / 60000);
-            } else {
-                var minutes = 1;
-            }
- 
+            // if (usageInMil < 21088) {
+            //     var minutes = Math.floor(usageInMil / 60000);
+            // } else {
+            //     var minutes = 1;
+            // }
+            var minutes = Math.floor(usageInMil / 60000);
             updateTotal(minutes);
             updateWeek(minutes);
             //update stats page
             $rootScope.$broadcast('usageUpdated', true);
-        } 
+        }
     }
 
     function updateTotal(min) {
@@ -75,7 +76,7 @@ app.factory("usage", function (localStore, $rootScope) {
                 }
             }
             localStore.set("weeks", JSON.stringify(weekObj));
-        } 
+        }
     }
 
 });

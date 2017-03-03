@@ -13,15 +13,24 @@
 // reset date like todayflow - if no data available 1:0:0:0 *done
 //change bg color of message box *done
 // if timer count is in sec convert to 1 min and save *done
+//---------------
 
-//use list sms 
+// bug while saving time to localstorage stores only 1 min
+//use list sms - start nd stop
 //stop flowcode
-//set localstorage to default value
+//set localstorage to default value in config
+// test with start ans stop sms
+//test in low end phones 
+//live status of motor
+//notification sticky untill pump is off
+//debugging test
+// add beta feature mode in appconfig , to access pump verify features - based on it disable sms status verify
 
 
 
 app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService) {
     var mobileNumber = "";
+    $scope.log = "Stopped";
     if (localStore.get("flowNumber")) {
         mobileNumber = localStore.get("flowNumber");
     } else {
@@ -60,6 +69,9 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.btnStatus = "STOP";
             $scope.status = "RUNNING";
             var flowStartTime = timeCapsule();
+            // check pump status
+            updateStatus(appMsg.start);
+
             function timeNow() {
                 var tempTime = new Date();
                 var difference = tempTime.getTime() - flowStartTime.getTime();
@@ -141,13 +153,12 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     }
 
     var msgs = [
-        {
-
+        { 
             "address": "+919591231640",
             "date": 1488430379890,
             "date_sent": 1488430380000,
             "reply_path_present": 0,
-            "body": "Starr"
+            "body": "2 PUMP ON "
         },
         {
 
@@ -162,23 +173,62 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
 
 
     function getStatus(status) {
+
+        // call sms list service
         angular.forEach(msgs, function (value, key) {
             //  this.push(key + ': ' + value);          
             //var test = "2 PUMP ON DATE:17/07/07";
 
             //get date from local storage 
             //get mobile number from local storage 
+            var startDate = new Date(localStorage.getItem("flowTime"));
+            var msgDate = new Date(value.date);
+            console.log("****************");
+            console.log(startDate);
+            console.log(msgDate);
 
             if ("+91" + mobileNumber == value.address) {
-                //  console.log(value.body);
-                textLike(value.body, status);
+                if ("+91" + mobileNumber == value.address) {
+                    //  console.log(value.body);
+
+                    // filter sms by date 
+                    // for (var i = 0; i < Object.keys(SMSReply).length; i++) { 
+                    // }
+
+                    if (textLike(value.body, SMSReply.pumpON)) {
+                        //currentStatus = appMsg.pumpON;
+                        currentStatus = appMsg.start;
+                    } else if (textLike(value.body, SMSReply.pumpOff)) {
+                        //currentStatus = SMSReply.pumpOff;
+                        currentStatus = appMsg.stop;
+                        //} else if (textLike(value.body, SMSReply.on)) {
+                        currentStatus = appMsg.start;
+                        currentStatus = SMSReply.on;
+                    } else if (textLike(value.body, SMSReply.off)) {
+                        //currentStatus = SMSReply.off;
+                        currentStatus = appMsg.stop;
+                    }
+                    //$scope.log = currentStatus;
+                    if (localStorage.getItem("flowTime") == null && currentStatus == "START") {
+                        //stop timer , pump not running
+                        alert("Seems like PUMP is not Running.");
+                        $scope.stopFlow();
+                        //show custom alert
+                    }
+                    if (localStorage.getItem("flowTime") != null && currentStatus == "STOP") {
+                        alert("Seems like PUMP is not Running.");
+                        $scope.stopFlow();
+                    }
+
+                    // stopped & on -->> off pump
+                    // stopped & off ->> no action required
+                    // started & on ->>  no action 
+                    // started & off ->> on it  
+                } 
             }
 
         }, []);
 
-
-    }
-    function liveStatus() {
 
     }
 
@@ -190,5 +240,8 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         }
     }
 
+    function updateStatus(status) {
+        getStatus(status);
+    }
 
 });

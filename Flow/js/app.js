@@ -1,7 +1,7 @@
 
 var app = angular.module('flowApp', ['ionic','chart.js']);
 
-app.run(function ($ionicPlatform) {
+app.run(function ($ionicPlatform,localStore) {
     $ionicPlatform.ready(function () {
         
         // set to default values
