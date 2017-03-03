@@ -70,7 +70,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.status = "RUNNING";
             var flowStartTime = timeCapsule();
             // check pump status
-            updateStatus(appMsg.start);
+           //  updateStatus(appMsg.start);
 
             function timeNow() {
                 var tempTime = new Date();
@@ -123,9 +123,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         localStorage.removeItem('flowTime');
     }
 
-    function isFlowRunning() {
-
-    }
+    
 
 
     // $scope.$on('packetsArrived', function (event, args) {

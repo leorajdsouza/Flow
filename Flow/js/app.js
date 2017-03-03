@@ -1,11 +1,16 @@
 
-var app = angular.module('flowApp', ['ionic','chart.js']);
+var app = angular.module('flowApp', ['ionic', 'chart.js']);
 
-app.run(function ($ionicPlatform,localStore) {
+app.run(function ($ionicPlatform, localStore) {
     $ionicPlatform.ready(function () {
-        
+
         // set to default values
         localStore.set("debug", "false");
+        
+
+        setTimeout(function () {
+            navigator.splashscreen.hide();
+        }, 1000);
 
     });
 });

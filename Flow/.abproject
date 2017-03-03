@@ -42,6 +42,8 @@
     "ID_RESOLUTION_HD720P"
   ],
   "CorePlugins": [
-    "cordova-plugin-whitelist"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-whitelist",
+    "de.appplant.cordova.plugin.local-notification@0.8.4.1"
   ]
 }
