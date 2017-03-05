@@ -43,7 +43,6 @@
   ],
   "CorePlugins": [
     "cordova-plugin-splashscreen",
-    "cordova-plugin-whitelist",
-    "de.appplant.cordova.plugin.local-notification@0.8.4.1"
+    "cordova-plugin-whitelist"
   ]
 }
