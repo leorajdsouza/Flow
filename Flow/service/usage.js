@@ -71,8 +71,8 @@ app.factory("usage", function (localStore, $rootScope) {
             }
             //reset upcomming weeks data             
             for (var i = 0; i < Object.keys(weekObj).length; i++) {
-                if (i >= todayDaynum) {
-                    weekObj[Object.keys(weekObj)[i]] = 0;
+                if (i > todayDaynum) {
+                    weekObj[weekArray[i]] = 0;
                 }
             }
             localStore.set("weeks", JSON.stringify(weekObj));

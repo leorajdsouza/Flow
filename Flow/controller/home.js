@@ -28,7 +28,7 @@
 
 
 
-app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService) {
+app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService, notification) {
     var mobileNumber = "";
     $scope.log = "Stopped";
     if (localStore.get("flowNumber")) {
@@ -48,8 +48,16 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             usage.update(timeCapsule());
             $scope.stopFlow();
             $scope.status = "";
+            $scope.countDown = "00:00:00";
+            $timeout(function(){
+                 $scope.countDown = "00:00:00";
+            },1000);
             $scope.btnStatus = "START";
+            notification.clear();
         } else {
+
+            notification.show();
+
             //send sms and wait for confirmation then trigger timer
             // $ionicLoading.show({
             //     template: 'Please wait, while sending signal to PUMP'
@@ -70,15 +78,17 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
             $scope.status = "RUNNING";
             var flowStartTime = timeCapsule();
             // check pump status
-           //  updateStatus(appMsg.start);
+            //  updateStatus(appMsg.start);
 
             function timeNow() {
                 var tempTime = new Date();
                 var difference = tempTime.getTime() - flowStartTime.getTime();
                 $scope.countDown = new Date(difference);
+                if (localStorage.getItem("flowTime") != null) {
+                    $scope.timerCtrl = $timeout(timeNow, 1000);
+                }
             }
-
-            $scope.timerCtrl = $interval(timeNow, 1000);
+            timeNow();
         }
     }
 
@@ -90,13 +100,11 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     }
 
     $scope.stopFlow = function () {
-        if (angular.isDefined($scope.timerCtrl)) {
-            $interval.cancel($scope.timerCtrl);
-            $scope.timerCtrl = undefined;
-            $scope.countDown = "00:00:00";
-            resetTime();
-            smsService.send(appMsg.stop, mobileNumber);
-        }
+        $timeout.cancel($scope.timerCtrl);
+        $scope.timerCtrl = undefined;
+        resetTime();
+        smsService.send(appMsg.stop, mobileNumber);
+
     };
 
     $scope.$on('$destroy', function () {
@@ -123,25 +131,6 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
         localStorage.removeItem('flowTime');
     }
 
-    
-
-
-    // $scope.$on('packetsArrived', function (event, args) {
-    //     console.log(args);
-    // });
-
-    // $ionicPlatform.on('onSMSArrive', function (sms) {
-    //     console.log("onSMSArrive");
-    //     alert("incomming");
-    //     if (sms.address == mobileNumber) {
-    //         // sms.sms.body
-    //         //  if body is stop 
-    //         $rootScope.$broadcast("packetsArrived", { body: body });
-    //     }
-    //     //  $scope.log = "msg from 2nd" + JSON.stringify(e);
-    //     SMS.stopWatch(onSuccess, onError);
-    // });
-
 
     function onSuccess(s) {
         console.log(s);
@@ -151,7 +140,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
     }
 
     var msgs = [
-        { 
+        {
             "address": "+919591231640",
             "date": 1488430379890,
             "date_sent": 1488430380000,
@@ -222,7 +211,7 @@ app.controller('homeCtrl', function ($scope, $interval, $ionicLoading, $ionicPla
                     // stopped & off ->> no action required
                     // started & on ->>  no action 
                     // started & off ->> on it  
-                } 
+                }
             }
 
         }, []);
