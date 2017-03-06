@@ -1,6 +1,7 @@
 <ion-view view-title="Home">
     <ion-content class="padding" scroll="false">
-        <div class="countdown">{{countDown | date:'HH:mm:ss' : 'UTC'}}</div> <button ng-click="startFlow(btnStatus)" class="button button-positive btn-countdown ">{{btnStatus}}</button>
-        <div class="status" ng-if="status=='RUNNING'"> <span class="start-flow "></span> <span class="blink-nw">{{status}}</span> </div>         
+        <div class="countdown" ng-if="status=='RUNNING'">{{countDown | date:'HH:mm:ss' : 'UTC'}}</div>      <div class="countdown" ng-if="status!='RUNNING'">00:00:00</div>  <button ng-click="startFlow(btnStatus)" class="button button-positive btn-countdown ">{{btnStatus}}</button>
+   
+        <div class="status" ng-if="status=='RUNNING'"> <span class="start-flow "></span> <span class="blink-nw">{{status}}</span> </div>
     </ion-content>
 </ion-view>

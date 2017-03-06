@@ -7,8 +7,6 @@ app.run(function ($ionicPlatform, localStore) {
         // set to default values
         localStore.set("debug", "false");
 
-       
-
         setTimeout(function () {
             navigator.splashscreen.hide();
         }, 1000);

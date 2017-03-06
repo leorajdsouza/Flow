@@ -13,7 +13,7 @@ app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore) {
 
     $scope.changeNumber = function () {
         var myPopup = $ionicPopup.show({
-            template: '<input type="text" class="pad10" ng-model="data.flowNumber">',
+            template: '<input type="tel" class="pad10" ng-model="data.flowNumber">',
             title: 'Mobile Number',
             scope: $scope,
             buttons: [

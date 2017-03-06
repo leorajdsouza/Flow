@@ -25,6 +25,9 @@
 //notification sticky untill pump is off
 //debugging test
 // add beta feature mode in appconfig , to access pump verify features - based on it disable sms status verify
+//if sms not sent kill timer -- test*
+// create time  picker to send notication to user to stop pump
+// notification not triggering properly - show if not displayed
 
 
 
@@ -45,17 +48,12 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
 
         if (angular.isDefined($scope.timerCtrl) && (localStorage.getItem("flowTime") == null || signal == "STOP")) {
             //send stop signal to water pump  in stop flow
+            $scope.status = "";
+
             usage.update(timeCapsule());
             $scope.stopFlow();
-            $scope.status = "";
-            $scope.countDown = "00:00:00";
-            $timeout(function(){
-                 $scope.countDown = "00:00:00";
-            },1000);
-            $scope.btnStatus = "START";
-            notification.clear();
         } else {
-
+            notification.clear();
             notification.show();
 
             //send sms and wait for confirmation then trigger timer
@@ -84,8 +82,10 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
                 var tempTime = new Date();
                 var difference = tempTime.getTime() - flowStartTime.getTime();
                 $scope.countDown = new Date(difference);
-                if (localStorage.getItem("flowTime") != null) {
+                if (localStorage.getItem("flowTime") != null && $scope.status != "") {
                     $scope.timerCtrl = $timeout(timeNow, 1000);
+                } else {
+                    $scope.stopFlow();
                 }
             }
             timeNow();
@@ -100,6 +100,10 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
     }
 
     $scope.stopFlow = function () {
+        $scope.countDown = "00:00:00";
+        $scope.btnStatus = "START";
+        notification.clear();
+        notification.clearTimeout(5000);
         $timeout.cancel($scope.timerCtrl);
         $scope.timerCtrl = undefined;
         resetTime();
@@ -139,96 +143,96 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
         console.log(e);
     }
 
-    var msgs = [
-        {
-            "address": "+919591231640",
-            "date": 1488430379890,
-            "date_sent": 1488430380000,
-            "reply_path_present": 0,
-            "body": "2 PUMP ON "
-        },
-        {
+    // var msgs = [
+    //     {
+    //         "address": "+919591231640",
+    //         "date": 1488430379890,
+    //         "date_sent": 1488430380000,
+    //         "reply_path_present": 0,
+    //         "body": "2 PUMP ON "
+    //     },
+    //     {
 
-            "address": "JM-JIOOTP",
-            "date": 1488384511760,
-            "date_sent": 1488384509000,
-            "reply_path_present": 0,
-            "body": "59705 is your One Time Password(OTP) for +918660865067. Please enter the OTP to continue registration for Jio4GVoice.",
+    //         "address": "JM-JIOOTP",
+    //         "date": 1488384511760,
+    //         "date_sent": 1488384509000,
+    //         "reply_path_present": 0,
+    //         "body": "59705 is your One Time Password(OTP) for +918660865067. Please enter the OTP to continue registration for Jio4GVoice.",
 
-        }
-    ]
-
-
-    function getStatus(status) {
-
-        // call sms list service
-        angular.forEach(msgs, function (value, key) {
-            //  this.push(key + ': ' + value);          
-            //var test = "2 PUMP ON DATE:17/07/07";
-
-            //get date from local storage 
-            //get mobile number from local storage 
-            var startDate = new Date(localStorage.getItem("flowTime"));
-            var msgDate = new Date(value.date);
-            console.log("****************");
-            console.log(startDate);
-            console.log(msgDate);
-
-            if ("+91" + mobileNumber == value.address) {
-                if ("+91" + mobileNumber == value.address) {
-                    //  console.log(value.body);
-
-                    // filter sms by date 
-                    // for (var i = 0; i < Object.keys(SMSReply).length; i++) { 
-                    // }
-
-                    if (textLike(value.body, SMSReply.pumpON)) {
-                        //currentStatus = appMsg.pumpON;
-                        currentStatus = appMsg.start;
-                    } else if (textLike(value.body, SMSReply.pumpOff)) {
-                        //currentStatus = SMSReply.pumpOff;
-                        currentStatus = appMsg.stop;
-                        //} else if (textLike(value.body, SMSReply.on)) {
-                        currentStatus = appMsg.start;
-                        currentStatus = SMSReply.on;
-                    } else if (textLike(value.body, SMSReply.off)) {
-                        //currentStatus = SMSReply.off;
-                        currentStatus = appMsg.stop;
-                    }
-                    //$scope.log = currentStatus;
-                    if (localStorage.getItem("flowTime") == null && currentStatus == "START") {
-                        //stop timer , pump not running
-                        alert("Seems like PUMP is not Running.");
-                        $scope.stopFlow();
-                        //show custom alert
-                    }
-                    if (localStorage.getItem("flowTime") != null && currentStatus == "STOP") {
-                        alert("Seems like PUMP is not Running.");
-                        $scope.stopFlow();
-                    }
-
-                    // stopped & on -->> off pump
-                    // stopped & off ->> no action required
-                    // started & on ->>  no action 
-                    // started & off ->> on it  
-                }
-            }
-
-        }, []);
+    //     }
+    // ]
 
 
-    }
+    // function getStatus(status) {
 
-    function textLike(body, str) {
-        if (body.search(str) == -1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    //     // call sms list service
+    //     angular.forEach(msgs, function (value, key) {
+    //         //  this.push(key + ': ' + value);          
+    //         //var test = "2 PUMP ON DATE:17/07/07";
 
-    function updateStatus(status) {
-        getStatus(status);
-    }
+    //         //get date from local storage 
+    //         //get mobile number from local storage 
+    //         var startDate = new Date(localStorage.getItem("flowTime"));
+    //         var msgDate = new Date(value.date);
+    //         console.log("****************");
+    //         console.log(startDate);
+    //         console.log(msgDate);
+
+    //         if ("+91" + mobileNumber == value.address) {
+    //             if ("+91" + mobileNumber == value.address) {
+    //                 //  console.log(value.body);
+
+    //                 // filter sms by date 
+    //                 // for (var i = 0; i < Object.keys(SMSReply).length; i++) { 
+    //                 // }
+
+    //                 if (textLike(value.body, SMSReply.pumpON)) {
+    //                     //currentStatus = appMsg.pumpON;
+    //                     currentStatus = appMsg.start;
+    //                 } else if (textLike(value.body, SMSReply.pumpOff)) {
+    //                     //currentStatus = SMSReply.pumpOff;
+    //                     currentStatus = appMsg.stop;
+    //                     //} else if (textLike(value.body, SMSReply.on)) {
+    //                     currentStatus = appMsg.start;
+    //                     currentStatus = SMSReply.on;
+    //                 } else if (textLike(value.body, SMSReply.off)) {
+    //                     //currentStatus = SMSReply.off;
+    //                     currentStatus = appMsg.stop;
+    //                 }
+    //                 //$scope.log = currentStatus;
+    //                 if (localStorage.getItem("flowTime") == null && currentStatus == "START") {
+    //                     //stop timer , pump not running
+    //                     alert("Seems like PUMP is not Running.");
+    //                     $scope.stopFlow();
+    //                     //show custom alert
+    //                 }
+    //                 if (localStorage.getItem("flowTime") != null && currentStatus == "STOP") {
+    //                     alert("Seems like PUMP is not Running.");
+    //                     $scope.stopFlow();
+    //                 }
+
+    //                 // stopped & on -->> off pump
+    //                 // stopped & off ->> no action required
+    //                 // started & on ->>  no action 
+    //                 // started & off ->> on it  
+    //             }
+    //         }
+
+    //     }, []);
+
+
+    // }
+
+    // function textLike(body, str) {
+    //     if (body.search(str) == -1) {
+    //         return false;
+    //     } else {
+    //         return true;
+    //     }
+    // }
+
+    // function updateStatus(status) {
+    //     getStatus(status);
+    // }
 
 });

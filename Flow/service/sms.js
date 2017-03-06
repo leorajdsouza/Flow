@@ -25,7 +25,8 @@ app.factory("smsService", function (localStore) {
 
             //     }, function () {
             //         alert("Error while sending sms.");
-            //         SMS.stopWatch(onSuccess, onError);
+            //        // SMS.stopWatch(onSuccess, onError);
+            //     localStorage.removeItem('flowTime');
             //     });
             // }
         },
