@@ -1,4 +1,4 @@
-# <img src="https://github.com/leorajdsouza/Flow/blob/master/screenshot/logo.svg" width="100" height="100" /> Flow v1.0
+# <img src="https://github.com/leorajdsouza/Flow/blob/master/screenshot/logo.png" width="100" height="100" /> Flow v1.0
 Control Flow of water pump using mobile app
 
 Android Build <br>
