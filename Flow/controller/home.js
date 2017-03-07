@@ -1,36 +1,26 @@
 
 //to do
-
-// store font offline *done
-// intercept msg
-// week stats *done
-// debug alert
-// update following week days to zero - use loop * test pending
-// reset stats on first launch *
-// set sec to min while setting min in local storage -- no required
-// what if total hour exceeds 24hr ? reset after 30days *done , test pending
-//chart date and hr format 20 hr 2 min *done
-// reset date like todayflow - if no data available 1:0:0:0 *done
-//change bg color of message box *done
-// if timer count is in sec convert to 1 min and save *done
-//---------------
-
-// bug while saving time to localstorage stores only 1 min
+ 
+// intercept msg 
+// debug alert 
+// reset stats on first launch *   
+// bug while saving time to localstorage stores only 1 min *done
 //use list sms - start nd stop
-//stop flowcode
+//stop flowcode *done -test with sms pending
 //set localstorage to default value in config
 // test with start ans stop sms
 //test in low end phones 
 //live status of motor
-//notification sticky untill pump is off
+//notification sticky untill pump is off *done
 //debugging test
 // add beta feature mode in appconfig , to access pump verify features - based on it disable sms status verify
-//if sms not sent kill timer -- test*
+
+// Milstones
 // create time  picker to send notication to user to stop pump
 // notification not triggering properly - show if not displayed
+// sms not sent , ignor usage data
 
-
-
+ 
 app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService, notification) {
     var mobileNumber = "";
     $scope.log = "Stopped";
@@ -47,9 +37,7 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
     $scope.startFlow = function (signal) {
 
         if (angular.isDefined($scope.timerCtrl) && (localStorage.getItem("flowTime") == null || signal == "STOP")) {
-            //send stop signal to water pump  in stop flow
-            $scope.status = "";
-
+            //send stop signal to water pump  in stop flow 
             usage.update(timeCapsule());
             $scope.stopFlow();
         } else {
@@ -100,9 +88,11 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
     }
 
     $scope.stopFlow = function () {
+        $scope.status = ""; 
         $scope.countDown = "00:00:00";
         $scope.btnStatus = "START";
         notification.clear();
+        //fix for android 6.0
         notification.clearTimeout(5000);
         $timeout.cancel($scope.timerCtrl);
         $scope.timerCtrl = undefined;
