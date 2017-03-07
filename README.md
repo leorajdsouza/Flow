@@ -1,4 +1,4 @@
-# Flow 1.O
+# Flow v1.0
 Control Flow of water pump using mobile app
 
 Android Build <br>
