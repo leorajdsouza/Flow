@@ -1,7 +1,7 @@
 var appMsg = {
-    start: "START",
-    stop: "STOP",
-    status: "STATUS",
+    start: "1",
+    stop: "2",
+    status: "7",
 }
 
 var SMSReply = {
@@ -10,7 +10,7 @@ var SMSReply = {
     on: "ON",
     off: "OFF",
 }
- 
- var appConfig = {
-     enableSMS : false
- }
+
+var appConfig = {
+    enableSMS: false
+}

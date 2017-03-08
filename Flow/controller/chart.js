@@ -16,6 +16,17 @@ app.controller('chartCtrl', function ($scope, localStore) {
         ];
         $scope.sms = 0;
         $scope.totalDay = 0;
+        $scope.showsms = true;
+
+        //check for sms settings
+        if(localStore.get("settingsSMS") != null){ 
+            if(localStore.get("settingsSMS") == "false"){
+                $scope.showsms = false;
+            }else{
+                $scope.showsms = true;
+            }
+            
+        }
 
         var weekArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         var weekObj = JSON.parse(localStore.get("weeks"));
@@ -107,7 +118,7 @@ app.controller('chartCtrl', function ($scope, localStore) {
 
     }
 
-    $scope.$on("usageUpdated", function (event, args) {
+    $scope.$on("usageUpdated", function (event, args) { 
         if (args) {
             $scope.loadChart();
         }

@@ -1,5 +1,5 @@
 
-app.factory("smsService", function (localStore, $timeout) {
+app.factory("smsService", function (localStore,$rootScope, $timeout) {
     return {
         send: function (txt, number) {
             if (appConfig.enableSMS) {
@@ -13,9 +13,14 @@ app.factory("smsService", function (localStore, $timeout) {
                             localStore.set("sms", 1);
                         }
                         $rootScope.$broadcast('usageUpdated', true);
+                        flowHistory.push({ message: "SMS {"+txt+"} was sent", date: new Date() });
+                        $rootScope.$broadcast('historyUpdated', true);
                     }, function () {
+                        flowHistory.push({ message: "Error while sending Sms", date: new Date() });
+                        $rootScope.$broadcast('historyUpdated', true);
                         alert("Error while sending sms.");
                         localStorage.removeItem('flowTime');
+
                     });
                 }
             } else {
@@ -23,8 +28,12 @@ app.factory("smsService", function (localStore, $timeout) {
                     var count = parseInt(localStore.get("sms"));
                     count = count + 1;
                     localStore.set("sms", count);
+                     flowHistory.push({ message: "SMS {"+txt+"} was sent", date: new Date() });
+                    $rootScope.$broadcast('historyUpdated', true);
                 } else {
                     localStore.set("sms", 1);
+                    flowHistory.push({ message: "SMS was sent", date: new Date() });
+                    $rootScope.$broadcast('historyUpdated', true);
                 }
             }
 

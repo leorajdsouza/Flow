@@ -1,0 +1,10 @@
+<ion-view view-title="History">
+    <ion-content scroll="true">
+        <div class="card" ng-repeat="log in history | orderBy:'-date'">
+            <div class="item item-text-wrap"> {{log.message}} <span class="flow-color">@{{log.date | date: 'short'}} </span></div>
+        </div>
+        <div ng-if="history.length == 0" class="card">
+            <div class="item item-text-wrap"> No History</div>
+        </div>
+    </ion-content>
+</ion-view>

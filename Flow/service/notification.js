@@ -15,24 +15,23 @@ app.factory("notification", function ($ionicPlatform, $timeout) {
 
         },
         clear: function () {
-            $ionicPlatform.ready(function () {
-                // cordova.plugins.notification.local.clearAll(function () {
-                //     console.log("done");
-                // }, this);
+            // $ionicPlatform.ready(function () {
+            //     cordova.plugins.notification.local.clearAll(function () {
+            //         console.log("done");
+            //     }, this);
 
 
-            });
+            // });
         },
         clearTimeout: function (sec) {
-            $ionicPlatform.ready(function () {
+            // $ionicPlatform.ready(function () { 
+            //     $timeout(function () {
+            //         cordova.plugins.notification.local.clearAll(function () {
+            //             console.log("done");
+            //         }, this);
+            //     }, sec); 
 
-                // $timeout(function () {
-                //     cordova.plugins.notification.local.clearAll(function () {
-                //         console.log("done");
-                //     }, this);
-                // }, sec); 
-
-            });
+            // });
         }
 
     }

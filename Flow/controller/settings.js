@@ -1,15 +1,25 @@
-app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore) {
+app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore, $rootScope) {
     $scope.data = {};
 
     $scope.settingsChange = function () {
         console.log('settingsStats  Change');
-        localStore.set("debug", $scope.settingsDebug);
-
+        localStore.set("debug", $scope.settingsDebug.checked);
+        localStore.set("settingsSMS", $scope.settingsSMS.checked);
+        $rootScope.$broadcast('usageUpdated', true);
     };
 
     $scope.settingsUsage = { checked: true };
-    $scope.settingsSMS = { checked: true };
+    // $scope.settingsSMS = { checked: true };
     $scope.settingsDebug = { checked: false };
+
+    if (localStore.get("settingsSMS") != null) {
+        if (localStore.get("settingsSMS") == "false") {
+            $scope.settingsSMS = { checked: false };
+        } else {
+            $scope.settingsSMS = { checked: true };
+        }
+
+    }
 
     $scope.changeNumber = function () {
         var myPopup = $ionicPopup.show({
@@ -30,10 +40,13 @@ app.controller('settingsCtrl', function ($scope, $ionicPopup, localStore) {
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function (e) {
-                        if ($scope.data.flowNumber.length > 9) {
+                        if ($scope.data.flowNumber.length == 10) {
                             localStore.set("flowNumber", $scope.data.flowNumber);
                         } else {
                             //return $scope.mobileNumber;
+                            if ($scope.data.flowNumber.length != 10) {
+                                alert("Invalid Mobile Number");
+                            }
                             e.preventDefault();
                         }
                     }

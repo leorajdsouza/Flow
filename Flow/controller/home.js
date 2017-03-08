@@ -1,27 +1,4 @@
-
-//to do
- 
-// intercept msg 
-// debug alert 
-// reset stats on first launch *   
-// bug while saving time to localstorage stores only 1 min *done
-//use list sms - start nd stop
-//stop flowcode *done -test with sms pending
-//set localstorage to default value in config
-// test with start ans stop sms
-//test in low end phones 
-//live status of motor
-//notification sticky untill pump is off *done
-//debugging test
-// add beta feature mode in appconfig , to access pump verify features - based on it disable sms status verify
-
-// Milstones
-// create time  picker to send notication to user to stop pump
-// notification not triggering properly - show if not displayed
-// sms not sent , ignor usage data
-
- 
-app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlatform, $ionicPopover, localStore, $state, usage, smsService, notification) {
+app.controller('homeCtrl', function ($scope, $timeout, $ionicPlatform, localStore, $state, usage, smsService, notification, $rootScope) {
     var mobileNumber = "";
     $scope.log = "Stopped";
     if (localStore.get("flowNumber")) {
@@ -40,10 +17,14 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
             //send stop signal to water pump  in stop flow 
             usage.update(timeCapsule());
             $scope.stopFlow();
+            flowHistory.push({ message: "Flow Stopped", date: new Date() });
+            $rootScope.$broadcast('historyUpdated', true);
         } else {
             notification.clear();
             notification.show();
 
+            flowHistory.push({ message: "Flow Started", date: new Date() });
+            $rootScope.$broadcast('historyUpdated', true);
             //send sms and wait for confirmation then trigger timer
             // $ionicLoading.show({
             //     template: 'Please wait, while sending signal to PUMP'
@@ -88,7 +69,7 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicLoading, $ionicPlat
     }
 
     $scope.stopFlow = function () {
-        $scope.status = ""; 
+        $scope.status = "";
         $scope.countDown = "00:00:00";
         $scope.btnStatus = "START";
         notification.clear();

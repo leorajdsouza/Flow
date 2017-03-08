@@ -23,7 +23,7 @@
                             <div class="col flowPrime chart-info "> {{todayFlow | date:'HH:mm:ss'}}</div>
                             <div class="col col-40 flow-grey"> Today </div>
                         </div>
-                        <div class="col col-50">
+                        <div class="col col-50" ng-if="showsms">
                             <div class="col flowPrime chart-info "> {{sms}} </div>
                             <div class="col col-40 flow-grey"> Total SMS </div>
                         </div>
