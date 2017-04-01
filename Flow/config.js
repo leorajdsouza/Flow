@@ -12,5 +12,5 @@ var SMSReply = {
 }
 
 var appConfig = {
-    enableSMS: false
+    enableSMS: true
 }

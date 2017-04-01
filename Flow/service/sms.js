@@ -5,6 +5,7 @@ app.factory("smsService", function (localStore,$rootScope, $timeout) {
             if (appConfig.enableSMS) {
                 if (SMS) {
                     SMS.sendSMS(number, txt, function () {
+                        console.log(number);
                         if (localStore.get("sms") != null) {
                             var count = parseInt(localStore.get("sms"));
                             count = count + 1;

@@ -34,6 +34,7 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicPlatform, localStor
             //check if timer is already running, then sinal was sent to pump
 
             if (localStorage.getItem("flowTime") == null) {
+                mobileNumber = localStore.get("flowNumber");
                 smsService.send(appMsg.start, mobileNumber);
             }
 
@@ -78,6 +79,7 @@ app.controller('homeCtrl', function ($scope, $timeout, $ionicPlatform, localStor
         $timeout.cancel($scope.timerCtrl);
         $scope.timerCtrl = undefined;
         resetTime();
+        mobileNumber = localStore.get("flowNumber");
         smsService.send(appMsg.stop, mobileNumber);
 
     };
